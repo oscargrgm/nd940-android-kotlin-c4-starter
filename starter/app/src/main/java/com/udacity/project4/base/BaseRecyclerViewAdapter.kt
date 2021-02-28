@@ -8,15 +8,16 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseRecyclerViewAdapter<T>(private val callback: ((item: T) -> Unit)? = null) :
-    RecyclerView.Adapter<DataBindingViewHolder<T>>() {
+abstract class BaseRecyclerViewAdapter<T>(
+    private val callback: ((item: T) -> Unit)? = null
+) : RecyclerView.Adapter<DataBindingViewHolder<T>>() {
 
     private var _items: MutableList<T> = mutableListOf()
 
     /**
      * Returns the _items data
      */
-    private val items: List<T>?
+    private val items: List<T>
         get() = this._items
 
     override fun getItemCount() = _items.size
