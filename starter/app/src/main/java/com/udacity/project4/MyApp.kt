@@ -22,12 +22,12 @@ class MyApp : Application() {
          */
         val myModule = module {
             // This view model is declared singleton to be used across multiple fragments
-            single { RemindersLocalRepository(get()) }
             single { LocalDB.createRemindersDao(this@MyApp) }
+            single { RemindersLocalRepository(get()) }
 
             viewModel { AuthenticationViewModel() }
-            viewModel { SaveReminderViewModel(get(), get() as ReminderDataSource) }
-            viewModel { RemindersListViewModel(get(), get() as ReminderDataSource) }
+            viewModel { SaveReminderViewModel(get(), get() as RemindersLocalRepository) }
+            viewModel { RemindersListViewModel(get(), get() as RemindersLocalRepository) }
         }
 
         startKoin {
