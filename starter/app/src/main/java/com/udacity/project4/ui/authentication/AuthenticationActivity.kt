@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.firebase.ui.auth.AuthUI
 import com.udacity.project4.R
 import com.udacity.project4.databinding.ActivityAuthenticationBinding
-import com.udacity.project4.locationreminders.RemindersActivity
+import com.udacity.project4.ui.locationreminders.RemindersActivity
 import com.udacity.project4.utils.extension.launchActivityAndFinish
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
