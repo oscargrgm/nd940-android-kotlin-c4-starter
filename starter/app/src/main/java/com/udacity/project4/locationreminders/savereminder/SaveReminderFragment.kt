@@ -9,13 +9,13 @@ import com.udacity.project4.R
 import com.udacity.project4.base.BaseFragment
 import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.databinding.FragmentSaveReminderBinding
-import com.udacity.project4.utils.setDisplayHomeAsUpEnabled
-import org.koin.android.ext.android.inject
+import com.udacity.project4.utils.extension.setDisplayHomeAsUpEnabled
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SaveReminderFragment : BaseFragment() {
 
     // Get the view model this time as a single to be shared with the another fragment
-    override val viewModel: SaveReminderViewModel by inject()
+    override val viewModel: SaveReminderViewModel by viewModel()
 
     private lateinit var binding: FragmentSaveReminderBinding
 
@@ -33,6 +33,7 @@ class SaveReminderFragment : BaseFragment() {
 
         setDisplayHomeAsUpEnabled(true)
 
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
         return binding.root

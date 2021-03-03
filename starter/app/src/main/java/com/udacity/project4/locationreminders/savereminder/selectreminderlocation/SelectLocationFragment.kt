@@ -13,13 +13,13 @@ import com.udacity.project4.R
 import com.udacity.project4.base.BaseFragment
 import com.udacity.project4.databinding.FragmentSelectLocationBinding
 import com.udacity.project4.locationreminders.savereminder.SaveReminderViewModel
-import com.udacity.project4.utils.setDisplayHomeAsUpEnabled
-import org.koin.android.ext.android.inject
+import com.udacity.project4.utils.extension.setDisplayHomeAsUpEnabled
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SelectLocationFragment : BaseFragment() {
 
     // Use Koin to get the view model of the SaveReminder
-    override val viewModel: SaveReminderViewModel by inject()
+    override val viewModel: SaveReminderViewModel by viewModel()
 
     private lateinit var binding: FragmentSelectLocationBinding
 
@@ -35,8 +35,8 @@ class SelectLocationFragment : BaseFragment() {
             false
         )
 
-        binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         setHasOptionsMenu(true)
         setDisplayHomeAsUpEnabled(true)

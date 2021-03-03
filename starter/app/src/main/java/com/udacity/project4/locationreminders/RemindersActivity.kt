@@ -22,6 +22,8 @@ class RemindersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reminders)
+
+        binding.lifecycleOwner = this
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
