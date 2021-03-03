@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.locationreminders.data.local
+package com.udacity.project4.data.local
 
 import android.content.Context
 import androidx.room.Room

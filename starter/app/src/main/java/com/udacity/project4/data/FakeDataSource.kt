@@ -1,7 +1,7 @@
-package com.udacity.project4.ui.locationreminders.data
+package com.udacity.project4.data
 
-import com.udacity.project4.ui.locationreminders.data.dto.ReminderDTO
-import com.udacity.project4.ui.locationreminders.data.dto.Result
+import com.udacity.project4.data.dto.ReminderDTO
+import com.udacity.project4.data.dto.Result
 
 //Use FakeDataSource that acts as a test double to the LocalDataSource
 class FakeDataSource : ReminderDataSource {

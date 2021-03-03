@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
 import com.google.android.gms.location.Geofence
-import com.udacity.project4.ui.locationreminders.data.dto.ReminderDTO
-import com.udacity.project4.ui.locationreminders.data.dto.Result
-import com.udacity.project4.ui.locationreminders.data.local.RemindersLocalRepository
+import com.udacity.project4.data.dto.ReminderDTO
+import com.udacity.project4.data.dto.Result
+import com.udacity.project4.data.local.RemindersLocalRepository
 import com.udacity.project4.ui.locationreminders.reminderslist.ReminderDataItem
 import com.udacity.project4.utils.sendNotification
 import kotlinx.coroutines.*

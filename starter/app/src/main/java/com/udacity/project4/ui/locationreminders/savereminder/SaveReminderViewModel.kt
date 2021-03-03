@@ -8,8 +8,8 @@ import com.google.android.gms.maps.model.PointOfInterest
 import com.udacity.project4.R
 import com.udacity.project4.base.BaseViewModel
 import com.udacity.project4.base.NavigationCommand
-import com.udacity.project4.ui.locationreminders.data.ReminderDataSource
-import com.udacity.project4.ui.locationreminders.data.dto.ReminderDTO
+import com.udacity.project4.data.ReminderDataSource
+import com.udacity.project4.data.dto.ReminderDTO
 import com.udacity.project4.ui.locationreminders.reminderslist.ReminderDataItem
 import kotlinx.coroutines.launch
 
