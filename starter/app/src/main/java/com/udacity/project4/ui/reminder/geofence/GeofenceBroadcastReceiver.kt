@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.locationreminders.geofence
+package com.udacity.project4.ui.reminder.geofence
 
 import android.content.BroadcastReceiver
 import android.content.Context

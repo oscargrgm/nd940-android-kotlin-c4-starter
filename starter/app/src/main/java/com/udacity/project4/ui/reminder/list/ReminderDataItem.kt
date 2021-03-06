@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.locationreminders.reminderslist
+package com.udacity.project4.ui.reminder.list
 
 import java.io.Serializable
 import java.util.*

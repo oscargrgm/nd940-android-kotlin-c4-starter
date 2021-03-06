@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.locationreminders.savereminder
+package com.udacity.project4.ui.reminder.save
 
 import android.Manifest
 import android.app.Activity
@@ -15,7 +15,7 @@ import com.udacity.project4.base.BaseViewModel
 import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.data.ReminderDataSource
 import com.udacity.project4.data.dto.ReminderDTO
-import com.udacity.project4.ui.locationreminders.reminderslist.ReminderDataItem
+import com.udacity.project4.ui.reminder.list.ReminderDataItem
 import com.udacity.project4.utils.extension.CurrentLocationResult
 import com.udacity.project4.utils.extension.async
 import com.udacity.project4.utils.extension.requireCurrentLocation

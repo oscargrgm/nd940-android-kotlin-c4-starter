@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.locationreminders
+package com.udacity.project4.ui.reminder
 
 import android.os.Bundle
 import android.view.MenuItem

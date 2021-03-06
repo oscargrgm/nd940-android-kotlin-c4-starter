@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.locationreminders.geofence
+package com.udacity.project4.ui.reminder.geofence
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,7 @@ import com.google.android.gms.location.Geofence
 import com.udacity.project4.data.dto.ReminderDTO
 import com.udacity.project4.data.dto.Result
 import com.udacity.project4.data.local.RemindersLocalRepository
-import com.udacity.project4.ui.locationreminders.reminderslist.ReminderDataItem
+import com.udacity.project4.ui.reminder.list.ReminderDataItem
 import com.udacity.project4.utils.sendNotification
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject

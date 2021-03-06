@@ -1,9 +1,8 @@
-package com.udacity.project4.ui.locationreminders.savereminder.selectreminderlocation
+package com.udacity.project4.ui.reminder.save.location
 
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,13 +14,12 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.udacity.project4.R
 import com.udacity.project4.base.BaseFragment
 import com.udacity.project4.databinding.FragmentSelectLocationBinding
-import com.udacity.project4.ui.locationreminders.savereminder.SaveReminderViewModel
+import com.udacity.project4.ui.reminder.save.SaveReminderViewModel
 import com.udacity.project4.utils.extension.addLatLngMarker
 import com.udacity.project4.utils.extension.enableLocation
 import com.udacity.project4.utils.extension.onLongClick

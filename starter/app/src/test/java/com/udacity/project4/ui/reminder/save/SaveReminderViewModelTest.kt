@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.locationreminders.savereminder
+package com.udacity.project4.ui.reminder.save
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 

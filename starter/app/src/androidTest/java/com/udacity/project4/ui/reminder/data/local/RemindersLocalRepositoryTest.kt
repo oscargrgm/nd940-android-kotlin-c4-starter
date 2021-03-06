@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.locationreminders.data.local
+package com.udacity.project4.ui.reminder.data.local
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
