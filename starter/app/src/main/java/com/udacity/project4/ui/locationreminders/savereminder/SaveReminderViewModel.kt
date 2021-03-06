@@ -1,9 +1,14 @@
 package com.udacity.project4.ui.locationreminders.savereminder
 
+import android.Manifest
+import android.app.Activity
 import android.app.Application
+import android.location.Location
+import androidx.annotation.RequiresPermission
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PointOfInterest
 import com.udacity.project4.R
 import com.udacity.project4.base.BaseViewModel
@@ -11,6 +16,9 @@ import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.data.ReminderDataSource
 import com.udacity.project4.data.dto.ReminderDTO
 import com.udacity.project4.ui.locationreminders.reminderslist.ReminderDataItem
+import com.udacity.project4.utils.extension.CurrentLocationResult
+import com.udacity.project4.utils.extension.async
+import com.udacity.project4.utils.extension.requireCurrentLocation
 import kotlinx.coroutines.launch
 
 class SaveReminderViewModel(
@@ -41,6 +49,10 @@ class SaveReminderViewModel(
     private val _longitude = MutableLiveData<Double?>()
     val longitude: LiveData<Double?>
         get() = _longitude
+
+    private val _currentLocation = MutableLiveData<Location?>()
+    val currentLocation: LiveData<Location?>
+        get() = _currentLocation
 
     /**
      * Clear the live data objects to start fresh next time the view model gets called
@@ -99,5 +111,18 @@ class SaveReminderViewModel(
             false
         }
         else -> true
+    }
+
+    fun saveLatLng(latLng: LatLng) {
+        _latitude.value = latLng.latitude
+        _longitude.value = latLng.longitude
+    }
+
+    @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    fun requireCurrentLocation(activity: Activity) = viewModelScope.async {
+        when (val result = activity.requireCurrentLocation()) {
+            is CurrentLocationResult.Success -> _currentLocation.value = result.value
+            is CurrentLocationResult.Error -> result.exception.printStackTrace()
+        }
     }
 }
