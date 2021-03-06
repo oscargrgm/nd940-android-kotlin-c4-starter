@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.udacity.project4.R
 import com.udacity.project4.base.BaseFragment
 import com.udacity.project4.base.NavigationCommand
@@ -15,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SaveReminderFragment : BaseFragment() {
 
     // Get the view model this time as a single to be shared with the another fragment
-    override val viewModel: SaveReminderViewModel by viewModel()
+    override val viewModel: SaveReminderViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSaveReminderBinding
 
@@ -45,10 +46,7 @@ class SaveReminderFragment : BaseFragment() {
         binding.selectLocation.setOnClickListener {
             // Navigate to another fragment to get the user location
             viewModel.navigationCommand.value =
-                NavigationCommand.To(
-                    SaveReminderFragmentDirections
-                        .actionSaveReminderFragmentToSelectLocationFragment()
-                )
+                NavigationCommand.To(SaveReminderFragmentDirections.toSelectLocationFragment())
         }
 
         binding.saveReminder.setOnClickListener {

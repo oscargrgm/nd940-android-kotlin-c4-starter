@@ -13,6 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -31,7 +34,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SelectLocationFragment : BaseFragment() {
 
     // Use Koin to get the view model of the SaveReminder
-    override val viewModel: SaveReminderViewModel by viewModel()
+    override val viewModel: SaveReminderViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSelectLocationBinding
 
@@ -66,12 +69,9 @@ class SelectLocationFragment : BaseFragment() {
         mapFragment.getMapAsync { googleMap ->
             map = googleMap
 
-            map.run {
-                setStyle(requireContext(), R.raw.map_style)
-                onLongClick { currentMap, latLng ->
-                    onLocationSelected(currentMap, latLng)
-                }
-            }
+            map.setStyle(requireContext(), R.raw.map_style)
+            map.onLongClick { latLng -> onLocationSelected(latLng) }
+
             locationContract.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
@@ -107,12 +107,12 @@ class SelectLocationFragment : BaseFragment() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun onLocationSelected(currentMap: GoogleMap, latLng: LatLng) {
-        // TODO: When the user confirms on the selected location,
-        //  send back the selected location details to the view model
-        //  and navigate back to the previous fragment to save the reminder and add the geofence
-        currentMap.addLatLngMarker("", latLng)
+    private fun onLocationSelected(latLng: LatLng) {
+        map.addLatLngMarker("", latLng)
+
         viewModel.saveLatLng(latLng)
+
+        findNavController().navigateUp()
     }
 
     private fun onCurrentLocation(location: Location?) {

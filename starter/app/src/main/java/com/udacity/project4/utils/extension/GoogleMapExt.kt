@@ -46,9 +46,9 @@ fun GoogleMap.setStyle(context: Context, @RawRes style: Int) {
     }
 }
 
-fun GoogleMap.onLongClick(block: (currentMap: GoogleMap, latLng: LatLng) -> Unit) {
+fun GoogleMap.onLongClick(block: (latLng: LatLng) -> Unit) {
     setOnMapLongClickListener { latLng: LatLng ->
-        block(this, latLng)
+        block(latLng)
     }
 }
 
