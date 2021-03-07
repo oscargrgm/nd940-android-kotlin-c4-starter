@@ -1,9 +1,9 @@
 package com.udacity.project4
 
 import android.app.Application
-import com.udacity.project4.ui.authentication.AuthenticationViewModel
 import com.udacity.project4.data.local.LocalDB
 import com.udacity.project4.data.local.RemindersLocalRepository
+import com.udacity.project4.ui.authentication.AuthenticationViewModel
 import com.udacity.project4.ui.reminder.list.RemindersListViewModel
 import com.udacity.project4.ui.reminder.save.SaveReminderViewModel
 import org.koin.android.ext.koin.androidContext
@@ -25,7 +25,7 @@ class MyApp : Application() {
             single { RemindersLocalRepository(get()) }
 
             viewModel { AuthenticationViewModel() }
-            viewModel { SaveReminderViewModel(get(), get() as RemindersLocalRepository) }
+            single { SaveReminderViewModel(get(), get() as RemindersLocalRepository) }
             viewModel { RemindersListViewModel(get(), get() as RemindersLocalRepository) }
         }
 

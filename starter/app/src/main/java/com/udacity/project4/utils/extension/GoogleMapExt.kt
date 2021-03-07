@@ -1,19 +1,16 @@
 package com.udacity.project4.utils.extension
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.location.Location
 import android.util.Log
 import androidx.annotation.RawRes
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.*
+import com.google.android.gms.maps.model.PointOfInterest
 
 private const val TAG: String = "GoogleMapExt"
 
@@ -46,24 +43,16 @@ fun GoogleMap.setStyle(context: Context, @RawRes style: Int) {
     }
 }
 
-fun GoogleMap.onLongClick(block: (latLng: LatLng) -> Unit) {
-    setOnMapLongClickListener { latLng: LatLng ->
-        block(latLng)
+fun GoogleMap.onPoiClick(block: (currentMap: GoogleMap, poi: PointOfInterest) -> Unit) {
+    setOnPoiClickListener { poi ->
+        block(this, poi)
     }
 }
 
-fun GoogleMap.addLatLngMarker(title: String, latLng: LatLng) {
-    val snippet = String.format(
-        Locale.getDefault(),
-        "Lat: %1$.5f, Long: %2$.5f",
-        latLng.latitude,
-        latLng.longitude
-    )
+fun GoogleMap.addPoiMarker(poi: PointOfInterest) {
     val markerOptions = MarkerOptions()
-        .position(latLng)
-        .title(title)
-        .snippet(snippet)
-        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+        .position(poi.latLng)
+        .title(poi.name)
 
-    addMarker(markerOptions)
+    addMarker(markerOptions).also { marker -> marker.showInfoWindow() }
 }

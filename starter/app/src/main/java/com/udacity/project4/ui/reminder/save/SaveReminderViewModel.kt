@@ -4,11 +4,11 @@ import android.Manifest
 import android.app.Activity
 import android.app.Application
 import android.location.Location
+import android.view.View
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PointOfInterest
 import com.udacity.project4.R
 import com.udacity.project4.base.BaseViewModel
@@ -16,14 +16,16 @@ import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.data.ReminderDataSource
 import com.udacity.project4.data.dto.ReminderDTO
 import com.udacity.project4.ui.reminder.list.ReminderDataItem
+import com.udacity.project4.utils.Event
 import com.udacity.project4.utils.extension.CurrentLocationResult
 import com.udacity.project4.utils.extension.async
 import com.udacity.project4.utils.extension.requireCurrentLocation
+import com.udacity.project4.utils.extension.toEvent
 import kotlinx.coroutines.launch
 
 class SaveReminderViewModel(
     val app: Application,
-    val dataSource: ReminderDataSource
+    private val dataSource: ReminderDataSource
 ) : BaseViewModel(app) {
 
     private val _reminderTitle = MutableLiveData<String?>()
@@ -54,6 +56,10 @@ class SaveReminderViewModel(
     val currentLocation: LiveData<Location?>
         get() = _currentLocation
 
+    private val _isPoiValid = MutableLiveData<Event<Boolean>>()
+    val isPoiValid: LiveData<Event<Boolean>>
+        get() = _isPoiValid
+
     /**
      * Clear the live data objects to start fresh next time the view model gets called
      */
@@ -78,7 +84,7 @@ class SaveReminderViewModel(
     /**
      * Save the reminder to the data source
      */
-    fun saveReminder(reminderData: ReminderDataItem) {
+    private fun saveReminder(reminderData: ReminderDataItem) {
         showLoading.value = true
 
         viewModelScope.launch {
@@ -101,7 +107,7 @@ class SaveReminderViewModel(
     /**
      * Validate the entered data and show error to the user if there's any invalid data
      */
-    fun validateEnteredData(reminderData: ReminderDataItem): Boolean = when {
+    private fun validateEnteredData(reminderData: ReminderDataItem): Boolean = when {
         reminderData.title.isNullOrEmpty() -> {
             showSnackBarInt.value = R.string.err_enter_title
             false
@@ -113,16 +119,24 @@ class SaveReminderViewModel(
         else -> true
     }
 
-    fun saveLatLng(latLng: LatLng) {
-        _latitude.value = latLng.latitude
-        _longitude.value = latLng.longitude
-    }
-
     @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     fun requireCurrentLocation(activity: Activity) = viewModelScope.async {
         when (val result = activity.requireCurrentLocation()) {
             is CurrentLocationResult.Success -> _currentLocation.value = result.value
             is CurrentLocationResult.Error -> result.exception.printStackTrace()
+        }
+    }
+
+    fun setSelectedPoi(poi: PointOfInterest) {
+        _selectedPOI.value = poi
+    }
+
+    fun onSaveLocationClicked(view: View) {
+        if (_selectedPOI.value != null) {
+            _isPoiValid.value = true.toEvent()
+        } else {
+            _isPoiValid.value = false.toEvent()
+            showErrorMessage.value = view.context.getString(R.string.select_poi)
         }
     }
 }

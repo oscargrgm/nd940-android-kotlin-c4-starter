@@ -3,12 +3,9 @@ package com.udacity.project4.utils.extension
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import androidx.annotation.RequiresPermission
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
