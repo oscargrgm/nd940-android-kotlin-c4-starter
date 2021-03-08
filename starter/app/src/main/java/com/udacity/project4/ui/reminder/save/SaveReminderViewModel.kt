@@ -3,6 +3,7 @@ package com.udacity.project4.ui.reminder.save
 import android.Manifest
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.location.Location
 import android.view.View
 import androidx.annotation.RequiresPermission
@@ -16,11 +17,9 @@ import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.data.ReminderDataSource
 import com.udacity.project4.data.dto.ReminderDTO
 import com.udacity.project4.ui.reminder.list.ReminderDataItem
-import com.udacity.project4.utils.Event
 import com.udacity.project4.utils.extension.CurrentLocationResult
 import com.udacity.project4.utils.extension.async
 import com.udacity.project4.utils.extension.requireCurrentLocation
-import com.udacity.project4.utils.extension.toEvent
 import kotlinx.coroutines.launch
 
 class SaveReminderViewModel(
@@ -55,10 +54,6 @@ class SaveReminderViewModel(
     private val _currentLocation = MutableLiveData<Location?>()
     val currentLocation: LiveData<Location?>
         get() = _currentLocation
-
-    private val _isPoiValid = MutableLiveData<Event<Boolean>>()
-    val isPoiValid: LiveData<Event<Boolean>>
-        get() = _isPoiValid
 
     /**
      * Clear the live data objects to start fresh next time the view model gets called
@@ -127,15 +122,21 @@ class SaveReminderViewModel(
         }
     }
 
-    fun setSelectedPoi(poi: PointOfInterest) {
+    fun setSelectedPoi(context: Context, poi: PointOfInterest) {
         _selectedPOI.value = poi
+        _reminderSelectedLocationStr.value = String.format(
+            context.getString(R.string.lat_long_snippet),
+            poi.latLng.latitude,
+            poi.latLng.longitude
+        )
+        _latitude.value = _selectedPOI.value?.latLng?.latitude
+        _latitude.value = _selectedPOI.value?.latLng?.longitude
     }
 
     fun onSaveLocationClicked(view: View) {
         if (_selectedPOI.value != null) {
-            _isPoiValid.value = true.toEvent()
+            navigationCommand.value = NavigationCommand.Back
         } else {
-            _isPoiValid.value = false.toEvent()
             showErrorMessage.value = view.context.getString(R.string.select_poi)
         }
     }

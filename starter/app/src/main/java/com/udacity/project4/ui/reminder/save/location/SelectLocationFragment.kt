@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.PointOfInterest
@@ -21,7 +20,6 @@ import com.udacity.project4.R
 import com.udacity.project4.base.BaseFragment
 import com.udacity.project4.databinding.FragmentSelectLocationBinding
 import com.udacity.project4.ui.reminder.save.SaveReminderViewModel
-import com.udacity.project4.utils.EventObserver
 import com.udacity.project4.utils.extension.addPoiMarker
 import com.udacity.project4.utils.extension.enableLocation
 import com.udacity.project4.utils.extension.onPoiClick
@@ -70,7 +68,7 @@ class SelectLocationFragment : BaseFragment() {
             map = googleMap
 
             map.setStyle(requireContext(), R.raw.map_style)
-            map.onPoiClick { _, poi -> viewModel.setSelectedPoi(poi) }
+            map.onPoiClick { _, poi -> viewModel.setSelectedPoi(requireContext(), poi) }
 
             locationContract.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
@@ -80,7 +78,6 @@ class SelectLocationFragment : BaseFragment() {
 
         viewModel.currentLocation.observe(viewLifecycleOwner, ::onCurrentLocation)
         viewModel.selectedPOI.observe(viewLifecycleOwner, ::onSelectedPoi)
-        viewModel.isPoiValid.observe(viewLifecycleOwner, EventObserver(::isPoiValid))
         viewModel.showErrorMessage.observe(viewLifecycleOwner, ::onErrorMessage)
 
         return binding.root
@@ -118,10 +115,6 @@ class SelectLocationFragment : BaseFragment() {
 
     private fun onSelectedPoi(selectedPoi: PointOfInterest?) {
         selectedPoi?.let { map.addPoiMarker(it) }
-    }
-
-    private fun isPoiValid(isValid: Boolean) {
-        if (isValid) findNavController().navigateUp()
     }
 
     private fun onErrorMessage(message: String?) {
