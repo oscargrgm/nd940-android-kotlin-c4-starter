@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
@@ -78,7 +79,18 @@ class ReminderListFragment : BaseFragment() {
         when (item.itemId) {
             R.id.logout -> {
                 AuthUI.getInstance().signOut(requireContext())
-                findNavController().navigate(ReminderListFragmentDirections.toAuthenticationActivity())
+                    .addOnSuccessListener {
+                        findNavController()
+                            .navigate(ReminderListFragmentDirections.toAuthenticationActivity())
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error during logging out: ${it.message}. Please try again.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        it.printStackTrace()
+                    }
             }
         }
         return super.onOptionsItemSelected(item)

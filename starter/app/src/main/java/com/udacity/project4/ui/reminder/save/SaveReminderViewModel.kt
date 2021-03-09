@@ -133,7 +133,7 @@ class SaveReminderViewModel(
             poi.latLng.longitude
         )
         _latitude.value = _selectedPOI.value?.latLng?.latitude
-        _latitude.value = _selectedPOI.value?.latLng?.longitude
+        _longitude.value = _selectedPOI.value?.latLng?.longitude
     }
 
     fun onSaveLocationClicked(view: View) {

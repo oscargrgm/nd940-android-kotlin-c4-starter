@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,7 +65,7 @@ class SaveReminderFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this
+
         binding.selectLocation.setOnClickListener {
             // Navigate to another fragment to get the user location
             viewModel.navigationCommand.value =
@@ -72,19 +73,13 @@ class SaveReminderFragment : BaseFragment() {
         }
 
         binding.saveReminder.setOnClickListener {
-            val title = viewModel.reminderTitle.value
-            val description = viewModel.reminderDescription.value
-            val location = viewModel.reminderSelectedLocationStr.value
-            val latitude = viewModel.latitude.value
-            val longitude = viewModel.longitude.value
+            val title: String = binding.reminderTitle.text.toString()
+            val description: String = binding.reminderDescription.text.toString()
+            val location: String? = viewModel.reminderSelectedLocationStr.value
+            val latitude: Double? = viewModel.latitude.value
+            val longitude: Double? = viewModel.longitude.value
 
-            val dataItem = ReminderDataItem(
-                title,
-                description,
-                location,
-                latitude,
-                longitude
-            )
+            val dataItem = ReminderDataItem(title, description, location, latitude, longitude)
             createGeofence(dataItem)
             viewModel.validateAndSaveReminder(dataItem)
         }
@@ -119,10 +114,12 @@ class SaveReminderFragment : BaseFragment() {
         try {
             geofencingClient.addGeofences(geofencingRequest, geofencingPendingIntent).run {
                 addOnSuccessListener {
+                    Log.d(TAG, "Geofences added")
                     requireContext().toast("Geofences added")
                 }
                 addOnFailureListener {
-                    requireContext().toast("Problema adding geofence")
+                    Log.e(TAG, "Problem adding geofences")
+                    requireContext().toast("Problem adding geofences")
                     it.printStackTrace()
                 }
             }
@@ -138,5 +135,7 @@ class SaveReminderFragment : BaseFragment() {
     companion object {
         const val ACTION_GEOFENCE_EVENT =
             "com.udacity.project4.ui.reminder.save.SaveReminderFragment.action_geofence_event"
+
+        private const val TAG: String = "SaveReminderFragment"
     }
 }

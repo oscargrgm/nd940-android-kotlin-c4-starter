@@ -5,7 +5,7 @@ import com.google.android.gms.location.GeofenceStatusCodes
 import com.udacity.project4.R
 import java.util.concurrent.TimeUnit
 
-const val GEOFENCE_RADIUS_IN_METERS = 100f
+const val GEOFENCE_RADIUS_IN_METERS = 500f
 val GEOFENCE_EXPIRATION_IN_MILLISECONDS: Long = TimeUnit.HOURS.toMillis(1)
 
 fun errorMessage(context: Context, errorCode: Int): String = context.resources.getString(

@@ -47,7 +47,9 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private fun onAuthenticationState(authenticationState: AuthenticationState) {
         when (authenticationState) {
-            AuthenticationState.AUTHENTICATED -> launchActivityAndFinish<RemindersActivity>()
+            AuthenticationState.AUTHENTICATED -> {
+                launchActivityAndFinish<RemindersActivity>()
+            }
             AuthenticationState.NOT_AUTHENTICATED -> {
                 // Register is handled by FirebaseUI
             }

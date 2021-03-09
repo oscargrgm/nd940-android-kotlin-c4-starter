@@ -35,14 +35,14 @@ class SelectLocationFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSelectLocationBinding
 
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
 
     @SuppressLint("MissingPermission")
     private val locationContract = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
-            map.enableLocation()
+            map?.enableLocation()
             viewModel.requireCurrentLocation(requireActivity())
         }
     }
@@ -67,8 +67,8 @@ class SelectLocationFragment : BaseFragment() {
         mapFragment.getMapAsync { googleMap ->
             map = googleMap
 
-            map.setStyle(requireContext(), R.raw.map_style)
-            map.onPoiClick { _, poi -> viewModel.setSelectedPoi(requireContext(), poi) }
+            map?.setStyle(requireContext(), R.raw.map_style)
+            map?.onPoiClick { _, poi -> viewModel.setSelectedPoi(requireContext(), poi) }
 
             locationContract.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
@@ -89,19 +89,19 @@ class SelectLocationFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.normal_map -> {
-            map.mapType = GoogleMap.MAP_TYPE_NORMAL
+            map?.mapType = GoogleMap.MAP_TYPE_NORMAL
             true
         }
         R.id.hybrid_map -> {
-            map.mapType = GoogleMap.MAP_TYPE_HYBRID
+            map?.mapType = GoogleMap.MAP_TYPE_HYBRID
             true
         }
         R.id.satellite_map -> {
-            map.mapType = GoogleMap.MAP_TYPE_SATELLITE
+            map?.mapType = GoogleMap.MAP_TYPE_SATELLITE
             true
         }
         R.id.terrain_map -> {
-            map.mapType = GoogleMap.MAP_TYPE_TERRAIN
+            map?.mapType = GoogleMap.MAP_TYPE_TERRAIN
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -109,12 +109,12 @@ class SelectLocationFragment : BaseFragment() {
 
     private fun onCurrentLocation(location: Location?) {
         location?.let {
-            map.setCurrentLocation(it)
+            map?.setCurrentLocation(it)
         }
     }
 
     private fun onSelectedPoi(selectedPoi: PointOfInterest?) {
-        selectedPoi?.let { map.addPoiMarker(it) }
+        selectedPoi?.let { map?.addPoiMarker(it) }
     }
 
     private fun onErrorMessage(message: String?) {
