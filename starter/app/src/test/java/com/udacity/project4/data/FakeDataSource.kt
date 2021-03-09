@@ -1,6 +1,5 @@
-package com.udacity.project4.ui.reminder.data
+package com.udacity.project4.data
 
-import com.udacity.project4.data.ReminderDataSource
 import com.udacity.project4.data.dto.ReminderDTO
 import com.udacity.project4.data.dto.Result
 

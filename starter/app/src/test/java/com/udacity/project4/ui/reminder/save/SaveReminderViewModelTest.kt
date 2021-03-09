@@ -7,11 +7,11 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import com.udacity.project4.R
-import com.udacity.project4.ui.reminder.data.FakeDataSource
-import com.udacity.project4.ui.reminder.getOrAwaitValue
+import com.udacity.project4.data.FakeDataSource
+import com.udacity.project4.util.getOrAwaitValue
 import com.udacity.project4.ui.reminder.list.ReminderDataItem
-import com.udacity.project4.ui.reminder.rule.KoinRule
-import com.udacity.project4.ui.reminder.rule.MainCoroutineRule
+import com.udacity.project4.rule.KoinRule
+import com.udacity.project4.rule.MainCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before

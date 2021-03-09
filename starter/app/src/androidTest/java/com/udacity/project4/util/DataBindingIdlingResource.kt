@@ -96,18 +96,9 @@ private fun View.getBinding(): ViewDataBinding? = DataBindingUtil.getBinding(thi
  * Sets the activity from an [ActivityScenario] to be used from [DataBindingIdlingResource].
  */
 fun DataBindingIdlingResource.monitorActivity(
-    activityScenario: ActivityScenario<FragmentActivity>
+    activityScenario: ActivityScenario<out FragmentActivity>
 ) {
     activityScenario.onActivity {
         this.activity = it
-    }
-}
-
-/**
- * Sets the fragment from a [FragmentScenario] to be used from [DataBindingIdlingResource].
- */
-fun DataBindingIdlingResource.monitorFragment(fragmentScenario: FragmentScenario<Fragment>) {
-    fragmentScenario.onFragment {
-        this.activity = it.requireActivity()
     }
 }

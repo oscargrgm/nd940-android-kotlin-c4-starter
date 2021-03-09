@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.reminder
+package com.udacity.project4.util
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData

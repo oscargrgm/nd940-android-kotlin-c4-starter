@@ -1,4 +1,4 @@
-package com.udacity.project4.ui.reminder.rule
+package com.udacity.project4.rule
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
