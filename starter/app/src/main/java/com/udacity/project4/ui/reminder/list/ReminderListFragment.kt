@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
+import com.firebase.ui.auth.AuthUI
 import com.udacity.project4.R
 import com.udacity.project4.base.BaseFragment
 import com.udacity.project4.base.NavigationCommand
@@ -75,7 +77,8 @@ class ReminderListFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {
-                // TODO: add the logout implementation
+                AuthUI.getInstance().signOut(requireContext())
+                findNavController().navigate(ReminderListFragmentDirections.toAuthenticationActivity())
             }
         }
         return super.onOptionsItemSelected(item)

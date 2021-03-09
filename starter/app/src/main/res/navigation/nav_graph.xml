@@ -6,11 +6,18 @@
     app:startDestination="@id/reminderListFragment">
 
     <activity
+        android:id="@+id/authenticationActivity"
+        android:name="com.udacity.project4.ui.authentication.AuthenticationActivity"
+        android:label="AuthenticationActivity"
+        tools:layout="@layout/activity_authentication" />
+
+    <activity
         android:id="@+id/remindersActivity"
         android:name="com.udacity.project4.ui.reminder.RemindersActivity"
         android:label="RemindersActivity"
         tools:layout="@layout/activity_reminders" />
 
+    <!-- RemindersListFragment -->
     <fragment
         android:id="@+id/reminderListFragment"
         android:name="com.udacity.project4.ui.reminder.list.ReminderListFragment"
@@ -19,8 +26,15 @@
         <action
             android:id="@+id/to_saveReminderFragment"
             app:destination="@id/saveReminderFragment" />
+        <action
+            android:id="@+id/to_authenticationActivity"
+            app:destination="@id/authenticationActivity"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/authenticationActivity"
+            app:popUpToInclusive="true" />
     </fragment>
 
+    <!-- SaveReminderFragment -->
     <fragment
         android:id="@+id/saveReminderFragment"
         android:name="com.udacity.project4.ui.reminder.save.SaveReminderFragment"
@@ -34,6 +48,7 @@
             app:destination="@id/selectLocationFragment" />
     </fragment>
 
+    <!-- SelectLocationFragment -->
     <fragment
         android:id="@+id/selectLocationFragment"
         android:name="com.udacity.project4.ui.reminder.save.location.SelectLocationFragment"

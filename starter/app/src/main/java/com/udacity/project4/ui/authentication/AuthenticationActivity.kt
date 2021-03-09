@@ -49,7 +49,7 @@ class AuthenticationActivity : AppCompatActivity() {
         when (authenticationState) {
             AuthenticationState.AUTHENTICATED -> launchActivityAndFinish<RemindersActivity>()
             AuthenticationState.NOT_AUTHENTICATED -> {
-                // TODO Navigate to register
+                // Register is handled by FirebaseUI
             }
         }
     }
