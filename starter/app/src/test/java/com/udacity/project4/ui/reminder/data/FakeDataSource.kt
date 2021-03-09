@@ -1,5 +1,6 @@
-package com.udacity.project4.data
+package com.udacity.project4.ui.reminder.data
 
+import com.udacity.project4.data.ReminderDataSource
 import com.udacity.project4.data.dto.ReminderDTO
 import com.udacity.project4.data.dto.Result
 
@@ -18,9 +19,8 @@ class FakeDataSource(
     }
 
     override suspend fun getReminder(id: String): Result<ReminderDTO> =
-        reminders?.firstOrNull { it.id == id }?.let {
-            Result.Success(it)
-        } ?: Result.Error("reminder not found")
+        reminders?.firstOrNull { it.id == id }?.let { Result.Success(it) }
+            ?: Result.Error("reminder not found")
 
     override suspend fun deleteAllReminders() {
         reminders?.clear()

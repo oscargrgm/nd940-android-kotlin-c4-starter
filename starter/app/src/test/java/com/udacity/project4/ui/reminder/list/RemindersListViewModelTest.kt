@@ -5,8 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.udacity.project4.data.FakeDataSource
 import com.udacity.project4.data.dto.ReminderDTO
+import com.udacity.project4.ui.reminder.data.FakeDataSource
 import com.udacity.project4.ui.reminder.getOrAwaitValue
 import com.udacity.project4.ui.reminder.rule.KoinRule
 import com.udacity.project4.ui.reminder.rule.MainCoroutineRule
