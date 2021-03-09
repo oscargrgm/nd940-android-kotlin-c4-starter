@@ -7,6 +7,7 @@ import android.content.Context
 import android.location.Location
 import android.view.View
 import androidx.annotation.RequiresPermission
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -79,7 +80,8 @@ class SaveReminderViewModel(
     /**
      * Save the reminder to the data source
      */
-    private fun saveReminder(reminderData: ReminderDataItem) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun saveReminder(reminderData: ReminderDataItem) {
         showLoading.value = true
 
         viewModelScope.launch {
@@ -102,7 +104,8 @@ class SaveReminderViewModel(
     /**
      * Validate the entered data and show error to the user if there's any invalid data
      */
-    private fun validateEnteredData(reminderData: ReminderDataItem): Boolean = when {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun validateEnteredData(reminderData: ReminderDataItem): Boolean = when {
         reminderData.title.isNullOrEmpty() -> {
             showSnackBarInt.value = R.string.err_enter_title
             false
