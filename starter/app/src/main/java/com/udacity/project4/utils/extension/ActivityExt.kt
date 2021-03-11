@@ -15,6 +15,9 @@ sealed class CurrentLocationResult {
     data class Error(val exception: Throwable) : CurrentLocationResult()
 }
 
+private fun Location.toSuccess() = CurrentLocationResult.Success(this)
+private fun Throwable.toError(): CurrentLocationResult.Error = CurrentLocationResult.Error(this)
+
 inline fun <reified T : Activity> Activity.launchActivityAndFinish(extras: Bundle? = null) {
     val intent = Intent(this, T::class.java).apply {
         extras?.let { putExtras(it) }
@@ -27,7 +30,13 @@ inline fun <reified T : Activity> Activity.launchActivityAndFinish(extras: Bundl
 suspend fun Activity.requireCurrentLocation(): CurrentLocationResult =
     suspendCoroutine { continuation ->
         LocationServices.getFusedLocationProviderClient(this).lastLocation.run {
-            addOnSuccessListener { continuation.resume(CurrentLocationResult.Success(it)) }
-            addOnFailureListener { continuation.resume(CurrentLocationResult.Error(it)) }
+            addOnSuccessListener { location: Location? ->
+                location?.let {
+                    continuation.resume(it.toSuccess())
+                } ?: continuation.resume(NoSuchElementException("Current location is null").toError())
+            }
+            addOnFailureListener {
+                continuation.resume(it.toError())
+            }
         }
     }
