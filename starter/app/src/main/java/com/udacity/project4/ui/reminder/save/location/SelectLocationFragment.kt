@@ -3,6 +3,7 @@ package com.udacity.project4.ui.reminder.save.location
 import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.GoogleMap
@@ -22,6 +24,7 @@ import com.udacity.project4.databinding.FragmentSelectLocationBinding
 import com.udacity.project4.ui.reminder.save.SaveReminderViewModel
 import com.udacity.project4.utils.extension.addPoiMarker
 import com.udacity.project4.utils.extension.enableLocation
+import com.udacity.project4.utils.extension.isAndroidQOrAbove
 import com.udacity.project4.utils.extension.onPoiClick
 import com.udacity.project4.utils.extension.setCurrentLocation
 import com.udacity.project4.utils.extension.setDisplayHomeAsUpEnabled
@@ -36,6 +39,15 @@ class SelectLocationFragment : BaseFragment() {
     private lateinit var binding: FragmentSelectLocationBinding
 
     private var map: GoogleMap? = null
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private val backgroundLocationContract = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            locationContract.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
 
     @SuppressLint("MissingPermission")
     private val locationContract = registerForActivityResult(
@@ -70,7 +82,11 @@ class SelectLocationFragment : BaseFragment() {
             map?.setStyle(requireContext(), R.raw.map_style)
             map?.onPoiClick { _, poi -> viewModel.setSelectedPoi(requireContext(), poi) }
 
-            locationContract.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            if (isAndroidQOrAbove()) {
+                backgroundLocationContract.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            } else {
+                locationContract.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
         }
 
         setHasOptionsMenu(true)
